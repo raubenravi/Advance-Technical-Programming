@@ -1,15 +1,14 @@
 import math
-import seaborn as sns
-import matplotlib.pyplot as plt
 import PID
 import Simulation
 import  Sensor
 
 #function to get new Angle of attack and update servo position
 #set point should be the  output from the PID, it`s the angle the servo is set to
+import hBridge
+import servo
 
 
-#run 1 tik of the complete simulation
 def runSimulation(positieX : float, positieY : float, speedX, setpointSpeed, setpointY,  speedY, currentAngle, servoAngle, power, dt, weight,
                   intergralSpeed, previousErrorSpeed , intergralHeight, previousErrorHeight,lengt ):
     if (lengt > 0):
@@ -24,8 +23,8 @@ def runSimulation(positieX : float, positieY : float, speedX, setpointSpeed, set
         #update all variables
         positieX = result[0]
         positieY = result[1]
-        speedX = result[2]
         speedY = result[3]
+        speedX = result[2]
         currentAngle = result[4]
         error = setpointSpeed - speedX
         errorheigt = setpointY - positieY
@@ -44,6 +43,8 @@ def runSimulation(positieX : float, positieY : float, speedX, setpointSpeed, set
         previousErrorHeight = resultPidHeight[1]
         intergralHeight = resultPidHeight[2]
 
+        servo.servo(servoAngle)
+        hBridge.hBridge(power)
 
 
         runSimulation(positieX, positieY, speedX, setpointSpeed, setpointY,  speedY, currentAngle, servoAngle, power, dt, weight,
@@ -51,4 +52,3 @@ def runSimulation(positieX : float, positieY : float, speedX, setpointSpeed, set
 
 runSimulation(positieX= 10, positieY=5, speedX=5, setpointSpeed=10, setpointY=8,   speedY=0, currentAngle=0, servoAngle=0, power=10, dt=0.5, weight=0.2,
                       intergralSpeed=0, previousErrorSpeed=0 , intergralHeight=0, previousErrorHeight=0,lengt=30 )
-

@@ -1,7 +1,8 @@
 import math
+from functools import wraps
 
 #calculate the new speed
-def getSpeedX(speed, power):
+def getSpeedX(speed : float, power : float) -> float:
     if (speed >= 0):
        dragForce = 0.5 * 1.225 * math.pow(speed, 2) * 0.1 * 1.5
     else:
@@ -42,4 +43,3 @@ def UpdateAngleOfAttack(currentAngle : float, setPoint : float, dt : float) -> f
     if (currentAngle < -90):
         currentAngle = -90
     return currentAngle
-
