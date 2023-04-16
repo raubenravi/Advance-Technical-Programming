@@ -14,8 +14,6 @@ def getSpeedX(speed : float, power : float) -> float:
     return speed
 
 
-
-
 #lift equation
 def liftEquation(speed, angleOfAttack) -> float:
     r = 1.225 #density of air
@@ -31,6 +29,8 @@ def updateObject(positieX : float, positieY : float, speedX : float, speedY : fl
     speedY = liftEquation(speedX, angleOfAttack) * weight
     positieY = positieY + speedY * dt
     positieY = positieY - 9.81 * weight * dt
+    if positieY < 0:
+        positieY = 0
     return (positieX, positieY, speedX, speedY, angleOfAttack)
 
 
